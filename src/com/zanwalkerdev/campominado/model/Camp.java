@@ -1,7 +1,5 @@
 package com.zanwalkerdev.campominado.model;
 
-import com.zanwalkerdev.campominado.exceptions.ExplosionException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +55,7 @@ public class Camp {
             opened = true;
 
             if(mined){
-                throw new ExplosionException();
+                //TODO implementar nova versão
             }
 
             if(adjacentSafe()){
@@ -118,18 +116,4 @@ public class Camp {
         marked = false;
     }
 
-    @Override
-    public String toString() {
-        if(marked){
-            return "P";
-        } else if( opened && mined){
-            return "*";
-        } else if(opened && minesAdjacent() > 0){
-            return Long.toString(minesAdjacent());
-        } else if(opened) {
-            return " ";
-        } else {
-            return "#";
-        }
-    }
 }

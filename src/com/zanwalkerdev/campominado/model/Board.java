@@ -1,8 +1,5 @@
 package com.zanwalkerdev.campominado.model;
 
-import com.zanwalkerdev.campominado.exceptions.ExplosionException;
-import com.zanwalkerdev.campominado.exceptions.QuitException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -30,7 +27,8 @@ public class Board {
         try {
             camps.stream().filter(c -> c.getLine() == line && c.getColumn() == column)
                     .findFirst().ifPresent(c -> {c.open();});
-        } catch (ExplosionException e) {
+        } catch (Exception e) {
+            //FIXME ajustar a implementação do metodo abrir
             camps.forEach(c -> c.setOpened(true));
 
             throw e;
@@ -76,32 +74,5 @@ public class Board {
     public void resetGame(){
         camps.stream().forEach(c -> c.reset());
         drawMines();
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("  ");
-        for(int c = 0; c < columns; c++){
-            sb.append(" ");
-            sb.append(c);
-            sb.append(" ");
-        }
-        sb.append("\n");
-
-        int i = 0;
-        for(int line = 0; line < this.lines; line++){
-            sb.append(line);
-            sb.append(" ");
-            for(int column = 0; column < this.columns; column++){
-                sb.append(" ");
-                sb.append(camps.get(i));
-                sb.append(" ");
-                i++;
-            }
-            sb.append("\n");
-        }
-
-        return sb.toString();
     }
 }

@@ -13,10 +13,20 @@ public class Camp {
     private boolean marked;
 
     private final List<Camp> adjacentList = new ArrayList<>();
+    private List<ObserverCamp> observers = new ArrayList<>();
 
     public Camp(int line, int column){
         this.line = line;
         this.column = column;
+    }
+
+    public void registerObserver(ObserverCamp observer){
+        observers.add(observer);
+    }
+
+    private void notifyObservers(CampEvent event){
+        observers.stream()
+                .forEach(observer -> observer.eventHappened(this, event));
     }
 
     /* Logica para adicionar vizinhos, para vizinhos na horizontal e vertical o valor
@@ -46,6 +56,12 @@ public class Camp {
     void toggleMark(){
         if(!opened){
             marked = !marked;
+
+            if(marked){
+                notifyObservers(CampEvent.MARK);
+            } else {
+                notifyObservers(CampEvent.UNMARK);
+            }
         }
     }
 

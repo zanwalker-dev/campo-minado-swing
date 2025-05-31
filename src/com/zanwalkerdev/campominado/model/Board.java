@@ -93,6 +93,14 @@ public class Board implements ObserverCamp {
         }
     }
 
+    public int getLines() {
+        return lines;
+    }
+
+    public int getColumns() {
+        return columns;
+    }
+
     private void showMines(){
         camps.stream()
                 .filter(c -> c.isMined())

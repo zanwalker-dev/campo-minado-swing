@@ -10,7 +10,6 @@ public class MainFrame extends JFrame {
 
         Board board = new Board(16,30, 50);
         BoardPanel boardPanel = new BoardPanel(board);
-
         add(boardPanel);
 
         setTitle("Campo Minado");

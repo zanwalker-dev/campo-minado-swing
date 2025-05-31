@@ -68,11 +68,14 @@ public class Camp {
     /* Logica para abrir campo */
     boolean open(){
         if(!opened && !marked){
-            opened = true;
-
             if(mined){
-                //TODO implementar nova versão
+                notifyObservers(CampEvent.EXPLODE);
+                return true;
             }
+
+            setOpened(true);
+
+            notifyObservers(CampEvent.OPEN);
 
             if(adjacentSafe()){
                 adjacentList.forEach(Camp::open);
@@ -94,6 +97,10 @@ public class Camp {
 
     void setOpened(boolean opened) {
         this.opened = opened;
+
+        if(opened){
+            notifyObservers(CampEvent.OPEN);
+        }
     }
 
     public boolean isMined() {

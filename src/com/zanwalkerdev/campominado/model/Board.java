@@ -2,6 +2,7 @@ package com.zanwalkerdev.campominado.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 
@@ -12,6 +13,7 @@ public class Board implements ObserverCamp {
     private int mines;
 
     private final List<Camp> camps = new ArrayList<>();
+    private final List<Consumer<Boolean>> observers = new ArrayList<>();
 
     public Board(int lines, int columns, int mines) {
         this.lines = lines;
@@ -21,6 +23,15 @@ public class Board implements ObserverCamp {
         generateCamps();
         associateAdjacents();
         drawMines();
+    }
+
+    public void registerObserver(Consumer<Boolean> observer) {
+        observers.add(observer);
+    }
+
+    private void notifyObservers(boolean result){
+        observers.stream()
+                .forEach(o -> o.accept(result));
     }
 
     public void open(int line, int column) {
@@ -33,6 +44,10 @@ public class Board implements ObserverCamp {
 
             throw e;
         }
+    }
+
+    private void showMines(){
+        camps.forEach(c -> c.setOpened(true));
     }
 
     public void toggleMark(int line, int column) {
@@ -82,8 +97,10 @@ public class Board implements ObserverCamp {
     public void eventHappened(Camp camp, CampEvent event) {
         if(event == CampEvent.EXPLODE){
             System.out.println("BOOOM! Perdeu x.x");
+            notifyObservers(false);
         } else if(objectiveAchieved()) {
             System.out.println("Você ganhou!");
+            notifyObservers(true);
         }
     }
 }

@@ -35,19 +35,9 @@ public class Board implements ObserverCamp {
     }
 
     public void open(int line, int column) {
-        try {
             camps.stream().filter(c -> c.getLine() == line && c.getColumn() == column)
-                    .findFirst().ifPresent(c -> {c.open();});
-        } catch (Exception e) {
-            //FIXME ajustar a implementação do metodo abrir
-            camps.forEach(c -> c.setOpened(true));
-
-            throw e;
-        }
-    }
-
-    private void showMines(){
-        camps.forEach(c -> c.setOpened(true));
+                    .findFirst()
+                    .ifPresent(c -> {c.open();});
     }
 
     public void toggleMark(int line, int column) {
@@ -96,11 +86,16 @@ public class Board implements ObserverCamp {
     @Override
     public void eventHappened(Camp camp, CampEvent event) {
         if(event == CampEvent.EXPLODE){
-            System.out.println("BOOOM! Perdeu x.x");
+            showMines();
             notifyObservers(false);
         } else if(objectiveAchieved()) {
-            System.out.println("Você ganhou!");
             notifyObservers(true);
         }
+    }
+
+    private void showMines(){
+        camps.stream()
+                .filter(c -> c.isMined())
+                .forEach(c -> c.setOpened(true));
     }
 }

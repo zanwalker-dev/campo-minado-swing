@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 
-public class Board {
+public class Board implements ObserverCamp {
 
     private int lines;
     private int columns;
@@ -43,7 +43,9 @@ public class Board {
     private void generateCamps() {
         for (int line = 0; line < this.lines; line++) {
             for (int column = 0; column < this.columns; column++) {
-                camps.add(new Camp(line, column));
+                Camp camp = new Camp(line, column);
+                camp.registerObserver(this);
+                camps.add(camp);
             }
         }
     }
@@ -74,5 +76,14 @@ public class Board {
     public void resetGame(){
         camps.stream().forEach(c -> c.reset());
         drawMines();
+    }
+
+    @Override
+    public void eventHappened(Camp camp, CampEvent event) {
+        if(event == CampEvent.EXPLODE){
+            System.out.println("BOOOM! Perdeu x.x");
+        } else if(objectiveAchieved()) {
+            System.out.println("Você ganhou!");
+        }
     }
 }

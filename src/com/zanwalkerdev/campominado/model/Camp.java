@@ -129,8 +129,8 @@ public class Camp {
         return unveiled || safe;
     }
 
-    long minesAdjacent(){
-        return  adjacentList.stream().filter(a -> a.mined).count();
+    public int minesAdjacent(){
+        return  (int)adjacentList.stream().filter(a -> a.mined).count();
     }
 
     void reset() {

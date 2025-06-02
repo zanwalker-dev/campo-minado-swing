@@ -53,7 +53,7 @@ public class Camp {
     }
 
     /* Logica para proteger campo marcado */
-    void toggleMark(){
+    public void toggleMark(){
         if(!opened){
             marked = !marked;
 
@@ -66,7 +66,7 @@ public class Camp {
     }
 
     /* Logica para abrir campo */
-    boolean open(){
+    public boolean open(){
         if(!opened && !marked){
             if(mined){
                 notifyObservers(CampEvent.EXPLODE);

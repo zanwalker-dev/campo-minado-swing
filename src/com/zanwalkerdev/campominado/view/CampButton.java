@@ -13,7 +13,7 @@ public class CampButton extends JButton  implements ObserverCamp, MouseListener 
 
     private final Color BG_1 = new Color(92, 152, 28);
     private final Color BG_MARK = new Color(8, 179, 247);
-    private final Color BG_EXPLODE = new Color(189, 66, 68);
+    private final Color BG_EXPLODE = new Color(180, 66, 68);
     private final Color BORDER_COLOR = new Color(32, 90, 32);
     private final Color BORDER_COLOR_2 = new Color(69, 210, 69);
     private final Color TEXT_GREEN = new Color(0, 100, 0);
@@ -52,6 +52,13 @@ public class CampButton extends JButton  implements ObserverCamp, MouseListener 
     }
 
     private void applyStyleOpen() {
+
+        if(camp.isMined()) {
+            setBackground(BG_EXPLODE);
+            setBorder(BorderFactory.createLineBorder(Color.darkGray, 2));
+            return;
+        }
+
         setBackground(BG_1);
         setBorder(BorderFactory.createLineBorder(BORDER_COLOR_2, 2));
 
@@ -77,12 +84,21 @@ public class CampButton extends JButton  implements ObserverCamp, MouseListener 
     }
 
     private void applyStyleMark() {
+        setBackground(BG_MARK);
+        setText("");
+        setIcon(new ImageIcon(getClass().getResource("/images/mark.png")));
     }
 
     private void applyStyleExplode() {
+        setBackground(BG_EXPLODE);
+        setForeground(Color.WHITE);
+        setBorder(BorderFactory.createLineBorder(Color.darkGray, 2));
+        setText("X");
     }
 
     private void applyStyleDefault() {
+        setBackground(BG_1);
+        setText("");
     }
 
     @Override

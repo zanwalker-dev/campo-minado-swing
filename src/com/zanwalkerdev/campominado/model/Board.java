@@ -25,6 +25,10 @@ public class Board implements ObserverCamp {
         drawMines();
     }
 
+    public void forEach(Consumer<Camp> function) {
+        camps.forEach(function);
+    }
+
     public void registerObserver(Consumer<Boolean> observer) {
         observers.add(observer);
     }

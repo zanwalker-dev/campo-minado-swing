@@ -14,5 +14,11 @@ public class BoardPanel extends JPanel {
         int total = board.getLines() * board.getColumns();
 
         board.forEach(camp -> add(new CampButton(camp)));
+
+        board.registerObserver(event -> {
+            //TODO mostrar resultado para o usuário.
+
+            board.resetGame();
+        });
     }
 }

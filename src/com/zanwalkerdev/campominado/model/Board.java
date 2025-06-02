@@ -108,6 +108,7 @@ public class Board implements ObserverCamp {
     private void showMines(){
         camps.stream()
                 .filter(c -> c.isMined())
+                .filter(c -> !c.isMarked())
                 .forEach(c -> c.setOpened(true));
     }
 }

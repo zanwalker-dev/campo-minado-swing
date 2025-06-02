@@ -15,10 +15,5 @@ public class BoardPanel extends JPanel {
 
         board.forEach(camp -> add(new CampButton(camp)));
 
-        board.registerObserver(event -> {
-            //TODO mostrar resultado para o usuário.
-
-            board.resetGame();
-        });
     }
 }

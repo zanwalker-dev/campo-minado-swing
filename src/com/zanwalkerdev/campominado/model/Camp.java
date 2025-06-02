@@ -87,7 +87,7 @@ public class Camp {
     }
 
     /* Verifica se um campo adjacente é seguro*/
-    boolean adjacentSafe(){
+    public boolean adjacentSafe(){
        return adjacentList.stream().noneMatch(a -> a.mined);
     }
 
